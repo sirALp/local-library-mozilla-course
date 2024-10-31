@@ -1,0 +1,18 @@
+extends layout 
+
+block content 
+
+    h1 #{title}
+
+    form(method='POST')
+        div.form-group.w-50
+            label(for='name') Genre:
+            input#name.form-control.mb-2(type='text',placeholder='Fantasy, Poetry etc.'
+                name='name' required value=(undefined===genre ? '': genre.name))
+            button.btn.btn-primary(type='submit',style='position:relative;left:50%;transform:translateX(-50%)') Submit
+
+    
+    if errors
+        ul 
+            for error in errors
+                li.text-danger!= error.msg

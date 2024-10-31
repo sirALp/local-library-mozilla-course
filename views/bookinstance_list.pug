@@ -1,0 +1,29 @@
+extends layout
+
+block content 
+    h1= title 
+
+    if bookinstance_list.length 
+        table.table 
+            thead 
+                tr 
+                    th Book 
+                    th Imprint 
+                    th Due back 
+                    th Status 
+                    th &nbsp; 
+            tbody 
+                each bi in bookinstance_list 
+                    tr 
+                        td 
+                            a(href=bi.url)= bi.book.title 
+                        td= bi.imprint 
+                        td= bi.due_back_formatted
+                        if bi.status == 'Available' 
+                           td(class="text-success") Available 
+                        else if bi.status == 'Maintenance'
+                           td(class="text-danger") Maintenance
+                        else 
+                           td(class="text-warning") Overdue 
+    else 
+        p No book instances.

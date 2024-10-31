@@ -1,0 +1,43 @@
+extends layout
+
+block content
+
+  h1 ID: #{bookinstance._id}
+
+  p 
+    strong Title: 
+    a(href=bookinstance.book.url) #{bookinstance.book.title}
+  p 
+    strong Imprint: #{bookinstance.imprint}
+
+  p 
+    strong Status: 
+    if bookinstance.status == 'Available'
+      span.text-success #{bookinstance.status}
+    else if bookinstance.status == 'Maintenance'
+      span.text-danger #{bookinstance.status}
+    else
+      span.text-warning #{bookinstance.status}
+
+  if bookinstance.status != 'Available'
+    p 
+      strong Due back: #{bookinstance.due_back_formatted}
+  hr
+  p
+    a(href='#myModal' class='trigger-btn' data-toggle='modal') Delete
+  p(style='margin-top: 20px')
+    a(href=bookinstance.url+'/update') Update BookInstance
+  #myModal.modal.fade
+    .modal-dialog.modal-confirm
+      .modal-content
+        .modal-header
+          .icon-box
+            i.material-icons &#xE5CD;
+          h4.modal-title Are you sure?
+          button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+        .modal-body
+          p Do you really want to delete these records? This process cannot be undone.
+        .modal-footer
+          button.btn.btn-info(type="button", data-dismiss="modal") Cancel
+          button.btn.btn-danger(type="button", href=bookinstance.url + '/delete') Delete
+    
